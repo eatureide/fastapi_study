@@ -1,14 +1,13 @@
-from enum import Enum
+from typing import Union
 
-from fastapi import FastAPI
-
+from fastapi import FastAPI, Query
 
 app = FastAPI()
 
 
-@app.get("/items/{item_id}")
-async def read_user_item(
-    item_id: str, needy: str, skip: int = 0, limit: int | None = None
-):
-    item = {"item_id": item_id, "needy": needy, "skip": skip, "limit": limit}
-    return item
+@app.get("/items/")
+async def read_items(q: Union[str, None] = Query(default=None, max_length=2)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results

@@ -1,10 +1,10 @@
 [
     {
-        "label": "Enum",
-        "importPath": "enum",
-        "description": "enum",
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
         "isExtraImport": true,
-        "detail": "enum",
+        "detail": "typing",
         "documentation": {}
     },
     {
@@ -16,11 +16,19 @@
         "documentation": {}
     },
     {
+        "label": "Query",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "app",
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\n@app.get(\"/items/{item_id}\")\nasync def read_user_item(\n    item_id: str, needy: str, skip: int = 0, limit: int | None = None\n):\n    item = {\"item_id\": item_id, \"needy\": needy, \"skip\": skip, \"limit\": limit}\n    return item",
+        "peekOfCode": "app = FastAPI()\n@app.get(\"/items/\")\nasync def read_items(q: Union[str, None] = Query(default=None, max_length=2)):\n    results = {\"items\": [{\"item_id\": \"Foo\"}, {\"item_id\": \"Bar\"}]}\n    if q:\n        results.update({\"q\": q})\n    return results",
         "detail": "main",
         "documentation": {}
     }
